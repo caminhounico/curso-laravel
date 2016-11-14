@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('users', function () {
-    return dd(\App\User::all()->toArray());
+    $users = \App\User::all();
+    return view('user')->with(compact('users'));
 });
 
