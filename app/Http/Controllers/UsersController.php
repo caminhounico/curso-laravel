@@ -23,7 +23,6 @@ class UsersController extends Controller
 
     public function store(Request $form)
     {
-
         $user = new \App\User();
         //Atribui valores do formulário ao ORM User
         $user->name = $form->input('name');
