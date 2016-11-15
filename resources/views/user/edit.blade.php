@@ -5,7 +5,7 @@
 @stop
 @section('table')
     <h1 class="ui section title">Novo</h1>
-    {{ Form::open(['class'=>'ui form', 'route'=>'users.update']) }}
+    {{ Form::open(['class'=>'ui form', 'route'=>['users.update', $id]]) }}
     <div class="disabled field">
         <label>id</label>
         <input type="text" name="id" placeholder="Nome" value="{{$user->id}}">
@@ -19,6 +19,6 @@
         <input type="text" name="email" placeholder="Email" value="{{$user->email}}">
     </div>
 
-    <button class="ui button" type="submit">Enviar</button>
+    <button class="ui basic green button" type="submit">Atualizar</button>
     {{ Form::close() }}
 @stop

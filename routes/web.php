@@ -17,11 +17,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'users'], function (){
     Route::get('/', 'UsersController@index')->name('users.index');
-    Route::get('/create', 'UsersController@create')->name('users.create');
-    Route::post('/create', 'UsersController@store')->name('users.store');
-    Route::post('/edit', 'UsersController@edit')->name('users.edit');
-    Route::post('/update', 'UsersController@update')->name('users.update');
-    Route::post('/delete', 'UsersController@delete')->name('users.delete');
+    Route::get('/novo', 'UsersController@create')->name('users.create');
+    Route::post('/novo', 'UsersController@store')->name('users.store');
+    Route::get('/editar/{id?}', 'UsersController@edit')->name('users.edit');
+    Route::post('/editar/{id}', 'UsersController@update')->name('users.update');
+    Route::get('/deletar/{id?}', 'UsersController@delete')->name('users.delete');
 });
 
 

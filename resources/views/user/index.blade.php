@@ -4,7 +4,10 @@
 @stop
 @section('table')
     <h1>Usuários</h1>
-    <a href="{{route('users.create')}}">Criar novo</a>
+    <a class="ui basic primary button" href="{{route('users.create')}}">Criar novo</a>
+
+    @include('partials.alert')
+
     <table class="ui celled table">
         <thead>
         <tr>
@@ -19,14 +22,8 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>
-                    {{Form::open(['route'=>'users.edit', 'class'=>'ui form'])}}
-                    <input type="hidden" name="id" value="{{$user->id}}"/>
-                    <button class="ui mini basic button" type="submit">Editar</button>
-                    {{Form::close()}}
-                    {{Form::open(['route'=>'users.delete', 'class'=>'ui form'])}}
-                    <input type="hidden" name="id" value="{{$user->id}}"/>
-                    <button class="ui mini basic red button" type="submit">Deletar</button>
-                    {{Form::close()}}
+                    <a class="ui mini basic button" href="{{route('users.edit', $user->id)}}">Editar</a>
+                    <a class="ui mini basic red button" href="{{route('users.delete', $user->id)}}">Deletar</a>
                 </td>
             </tr>
         @endforeach

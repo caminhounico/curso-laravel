@@ -19,6 +19,6 @@
         <input type="password" name="password" placeholder="Senha">
     </div>
 
-    <button class="ui button" type="submit">Enviar</button>
+    <button class="ui basic green button" type="submit">Enviar</button>
     {{ Form::close() }}
 @stop
