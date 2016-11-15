@@ -23,11 +23,46 @@
                 <td>{{$user->email}}</td>
                 <td>
                     <a class="ui mini basic button" href="{{route('users.edit', $user->id)}}">Editar</a>
-                    <a class="ui mini basic red button" href="{{route('users.delete', $user->id)}}">Deletar</a>
+                    <a class="ui mini basic red button btn-delete"
+                       href="{{route('users.delete', $user->id)}}">Deletar</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
+    <div class="ui small modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Confirmar Exclusão
+        </div>
+        <div class="content">
+            <p>Você deseja realmente deletar este usuário?</p>
+        </div>
+        <div class="actions">
+            <div class="ui cancel red basic  button">
+                <i class="remove icon"></i>
+                Não
+            </div>
+            <div class="ui ok green basic  button">
+                <i class="checkmark icon"></i>
+                Sim
+            </div>
+        </div>
+    </div>
 @stop
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('.btn-delete').click(function (e) {
+                $link = $(this).attr("href");
+                e.preventDefault();
+                $('.ui.modal').modal('show');
+                $('.ui.ok.button').click(function () {
+                    $(location).attr('href', $link);
+                });
+            });
+        });
+    </script>
+@stop
+
 

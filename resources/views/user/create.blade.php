@@ -5,14 +5,17 @@
 @stop
 @section('table')
     <h1 class="ui section title">Novo</h1>
+
+    @include('partials.alert')
+
     {{ Form::open(['class'=>'ui form', 'route'=>'users.store']) }}
     <div class="field">
         <label>Nome</label>
-        <input type="text" name="name" placeholder="Nome">
+        <input type="text" name="name" placeholder="Nome" value="{{ old('name') }}">
     </div>
     <div class="field">
         <label>Email</label>
-        <input type="text" name="email" placeholder="Email">
+        <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
     </div>
     <div class="field">
         <label>Senha</label>

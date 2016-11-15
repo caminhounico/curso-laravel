@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\UsersCreateRequest;
+use App\Http\Requests\UsersUpdateRequest;
+use App\Repositories\UsersRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use App\User;
 
 class UsersController extends Controller
 {
+    //Add repository object in this class
+    protected $userRepository;
+
+    public function __construct()
+    {
+        return $this->userRepository = new UsersRepository();
+    }
 
     public function index()
     {
-        $users = User::all();
-
+        $users = $this->userRepository->findAll();
         return view('user.index')->with(compact('users'));
     }
 
@@ -22,54 +31,43 @@ class UsersController extends Controller
         return view('user.create');
     }
 
-    public function store(Request $form)
+    public function store(UsersCreateRequest $form)
     {
-        $user = new User();
-        //Atribui valores do formulário ao ORM User
-        $user->name = $form->input('name');
-        $user->email = $form->input('email');
-        $user->password = bcrypt($form->input('password'));
-        //Salva o dados no db.
-        $user->save();
-
-        return redirect()->route('users.index')->with('message','Item criado com sucesso!');
+        $result = $this->userRepository->store($form);
+        if ($result):
+            return redirect()->route('users.index')->with('message', 'Item criado com sucesso!');
+        endif;
+        return redirect()->route('users.index')->withErrors(['Não foi possivel salvar o usuário!']);
     }
 
     public function edit($id = null)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->findById($id);
         if (!is_null($user)):
             return view('user.edit')->with(compact('user', 'id'));
+        endif;
+        return redirect()->route('users.index')->withErrors(['Usuário não encontrado!']);
+    }
+
+    public function update(UsersUpdateRequest $form, $id)
+    {
+        $result = $this->userRepository->update($form, $id);
+
+        if($result):
+            return redirect()->route('users.index')->with('message', 'Item atualizado com sucesso!');
         else:
-            return redirect()->route('users.index')->withErrors(['Usuário não encontrado!']);
+            return redirect()->route('users.index')->withErrors(['Não foi possível atualizar!']);
         endif;
     }
 
-    public function update(Request $form, $id)
-    {
-        //Assing ORM  from bd from id = ?
-        $user = User::find($id);
-        //Set new values in ORM
-        $user->name = $form->input('name');
-        $user->email = $form->input('email');
-        //Save ORM in database
-        $user->update();
-
-
-        return redirect()->route('users.index')->with('message','Item atualizado com sucesso!');
-    }
 
     public function delete($id = null)
     {
-        //Assing ORM  from bd from id = ?
-        $user = User::find($id);
-        //Delete database file
-        if(!empty($user)):
-            $user->delete();
-            return redirect()->route('users.index')->with('message','Item deletado!');
-        else:
-            return redirect()->route('users.index')->withErrors(['Não foi possível deletar!']);
+        $result = $this->userRepository->delete($id);
+        if ($result):
+            return redirect()->route('users.index')->with('message', 'Item deletado!');
         endif;
+        return redirect()->route('users.index')->withErrors(['Não foi possível deletar!']);
 
     }
 }

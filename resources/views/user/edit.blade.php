@@ -5,6 +5,9 @@
 @stop
 @section('table')
     <h1 class="ui section title">Novo</h1>
+
+    @include('partials.alert')
+
     {{ Form::open(['class'=>'ui form', 'route'=>['users.update', $id]]) }}
     <div class="disabled field">
         <label>id</label>
