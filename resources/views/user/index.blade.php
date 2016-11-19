@@ -1,8 +1,8 @@
-@extends('template.app')
+@extends('layouts.app')
 @section('title')
     Users
 @stop
-@section('table')
+@section('content')
     <h1>Usuários</h1>
     <a class="ui basic primary button" href="{{route('users.create')}}">Criar novo</a>
 

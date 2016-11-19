@@ -1,9 +1,9 @@
-@extends('template.app')
+@extends('layouts.app')
 
 @section('title')
     Novo
 @stop
-@section('table')
+@section('content')
     <h1 class="ui section title">Novo</h1>
 
     @include('partials.alert')

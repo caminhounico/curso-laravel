@@ -51,8 +51,13 @@ class UsersRepository
     {
         //Assing ORM  from bd from id = ?
         $user = User::find($id);
-        //Delete database file
-        return $user->delete();
+        if (!is_null($user)):
+            //Delete database file
+            return $user->delete();
+        endif;
+        return false;
+
+
     }
 
 
