@@ -12,10 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('users.index');
+});
+Route::get('/home', function () {
+    return redirect()->route('users.index');
 });
 
-Route::group(['prefix' => 'users'], function (){
+
+Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
     Route::get('/', 'UsersController@index')->name('users.index');
     Route::get('/novo', 'UsersController@create')->name('users.create');
     Route::post('/novo', 'UsersController@store')->name('users.store');
@@ -24,5 +28,7 @@ Route::group(['prefix' => 'users'], function (){
     Route::get('/deletar/{id?}', 'UsersController@delete')->name('users.delete');
 });
 
+
+Auth::routes();
 
 
