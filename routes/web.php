@@ -28,6 +28,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/deletar/{id?}', 'UsersController@delete')->name('users.delete');
 });
 
+Route::resource('categorias','CategoriesController');
 
 Auth::routes();
 
