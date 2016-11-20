@@ -5,12 +5,21 @@ namespace App\Repositories;
 
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class UsersRepository
 {
     public function findAll()
     {
         return $users = User::all();
+    }
+
+    public function findOrderBy($column)
+    {
+        $user = DB::table('users')
+            ->orderBy($column)
+            ->get();
+        return $user;
     }
 
 
@@ -29,7 +38,11 @@ class UsersRepository
         $user->password = bcrypt($Request->input('password'));
 
         //Salva o dados no db.
-        return $user->save();
+        $result = $user->save();
+        if ($result):
+            return $user;
+        endif;
+        return false;
     }
 
     public function update($Request, $id)

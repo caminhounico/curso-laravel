@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersCreateRequest;
 use App\Http\Requests\UsersUpdateRequest;
+use App\Mail\NewUserMail;
 use App\Repositories\UsersRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use App\User;
+use Illuminate\Support\Facades\Mail;
+
 
 class UsersController extends Controller
 {
@@ -20,21 +23,26 @@ class UsersController extends Controller
         return $this->userRepository = new UsersRepository();
     }
 
+
     public function index()
     {
-        $users = $this->userRepository->findAll();
+        $users = $this->userRepository->findOrderBy('id');
         return view('user.index')->with(compact('users'));
     }
+
 
     public function create()
     {
         return view('user.create');
     }
 
+
     public function store(UsersCreateRequest $form)
     {
+        //Return Model::User or false
         $result = $this->userRepository->store($form);
-        if ($result):
+        if (!$result === false):
+            Mail::to($result->email)->send(new NewUserMail($result));
             return redirect()->route('users.index')->with('message', 'Item criado com sucesso!');
         endif;
         return redirect()->route('users.index')->withErrors(['Não foi possivel salvar o usuário!']);
@@ -49,11 +57,12 @@ class UsersController extends Controller
         return redirect()->route('users.index')->withErrors(['Usuário não encontrado!']);
     }
 
+
     public function update(UsersUpdateRequest $form, $id)
     {
         $result = $this->userRepository->update($form, $id);
 
-        if($result):
+        if ($result):
             return redirect()->route('users.index')->with('message', 'Item atualizado com sucesso!');
         else:
             return redirect()->route('users.index')->withErrors(['Não foi possível atualizar!']);

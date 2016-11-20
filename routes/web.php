@@ -19,7 +19,7 @@ Route::get('/home', function () {
 });
 
 
-Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'UsersController@index')->name('users.index');
     Route::get('/novo', 'UsersController@create')->name('users.create');
     Route::post('/novo', 'UsersController@store')->name('users.store');
