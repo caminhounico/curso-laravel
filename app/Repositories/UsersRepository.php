@@ -18,6 +18,7 @@ class UsersRepository
     {
         $user = DB::table('users')
             ->orderBy($column)
+            ->where('deleted_at', null)
             ->get();
         return $user;
     }

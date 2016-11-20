@@ -26,7 +26,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = $this->userRepository->findAll();
+        $users = $this->userRepository->findOrderBy('name');
         return view('user.index')->with(compact('users'));
     }
 
