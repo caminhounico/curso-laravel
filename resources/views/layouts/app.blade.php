@@ -23,11 +23,11 @@
     </script>
 </head>
 <body>
-<nav class="ui top fixed menu">h
+<nav class="ui top fixed menu">
     <div class="ui container">
         <!-- Branding Image -->
-        <a class="item" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+        <a class="item" href="{{ route('users.index') }}">
+            Basic Crud
         </a>
     </div>
 </nav>
