@@ -50,19 +50,5 @@
         </div>
     </div>
 @stop
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $('.btn-delete').click(function (e) {
-                $link = $(this).attr("href");
-                e.preventDefault();
-                $('.ui.modal').modal('show');
-                $('.ui.ok.button').click(function () {
-                    $(location).attr('href', $link);
-                });
-            });
-        });
-    </script>
-@stop
 
 
